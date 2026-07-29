@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App API</title>
+    <link rel="stylesheet" href="assets/index.css">
+    <link rel="icon" href="/assets/logo/thunder-svgrepo-com.svg">
+</head>
+<body>
+    <nav>
+        <h3>Franz Weather</h3>
+    </nav>
+
+    <main id="location-display">
+        <div id="currentLocation">
+            <span>Display Current Location</span>
+        </div>
+
+        <div id="weather-display">Display weather image</div>
+        <div id="temperature">Display temp</div>
+        <div id="humidity">Display humidity</div>
+        <div id="wind-speed"></div>
+        <div id="weather-description">Display description</div>
+    </main>
+
+    <section id="side-search">
+        <div id="search-header-location">DISPLAY SEARCH RESULT</div>
+        <div>
+            <input type="text" name="search-location" id="search-location" placeholder="Search location">
+            <button type="submit" onclick="getWeather()">CHECK WEATHER</button>
+        </div>
+
+        <div id="search-weather-display">Display weather image</div>
+        <div id="search-temperature">Display temp</div>
+        <div id="search-humidity">Display humidity</div>
+        <div id="search-wind-speed">Display wind-speed</div>
+        <div id="search-weather-description">Display description</div>
+    </section>
+
+<script src="index.js"></script>
+</body>
+</html>
