@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #101652;
+    --secondary-color: #1625a8;
+    --tertiary-color: #fff48f; 
+    --base-color: #FFFFFF;
+
+    --header-font: "Ephesis", cursive;
+    --city-font: "Akronim", system-ui;
+    --landing-font: "Rubik 80s Fade", system-ui;
+
+    --font-style: normal;
+}
+
+body {
+    background: var(--base-color);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;
+    height: 110px;
+}
+
+nav a span {
+    font-family: var(--header-font);
+    font-size: 2.6rem;
+}
+
+#hero-landing {
+    background-color: rgb(231, 231, 221);
+}
+
+#hero-landing h1 {
+    font-family: var(--landing-font);
+    font-weight: 300;
+    font-style: normal;
+}
+#hero-landing img {
+    width: 150px;
+    animation: bounce 4s ease-in infinite;
+}
+
+.lead {
+    font-size: 1.2rem;
+}
+
+.small {
+    font-style: italic;
+}
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(50px);
+    }
+    50% {
+        transform: translateY(-50px);
+    }
+    75% {
+        transform: translateY(50px);
+    }
+    100% {
+        transform: translateY(-50px);
+    }
+}
+
+#location-hero {
+    border-left: 4px solid black;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+#humidity-display,
+#temperature-display,
+#wind-display,
+#weather-description-display {
+    border-left: 5px solid violet;
+    border-radius: 10px;
+}

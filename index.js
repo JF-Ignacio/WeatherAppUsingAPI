@@ -1,5 +1,6 @@
 const apiKey = "b704f8087d6fbf2bc884c538e16ddf6e"; // FROM OPENWEATHER API
 const baseURL = "https://api.openweathermap.org/data/2.5/weather";
+let visits = parseInt(localStorage.getItem("searchVisits")) || 0;
 
 function getPosition() {
     return new Promise((resolve, reject) => {
@@ -9,48 +10,43 @@ function getPosition() {
     });
 }
 
-async function getCurrentWeather() {
-    try {
-        const position = await getPosition();
-        const {lat, long} = position.coords;
-        const data = await fetchWeather(lat, long);
-        renderWeather(data);
-    }
-    catch(error) {
-        console.log("An error occured", error);
+function updateSearchCounts() {
+    const visitorEl = document.getElementById("visitors");
+
+    if(visitorEl) {
+        visitorEl.textContent = visits;
     }
 }
 
-async function FetchWeatherByCoords(lat, long, lang) {
-    try {
-        const url = `${baseURL}?lat=${lat}&longitude=${long}&lang=${lang}=units=metric&appid=${apiKey}`;
-        const response = await fetch(url);
-        
-        if(!response.ok) {
-            throw new Exception(`Weather API is broken. : ${response.status}`);
-        }
+async function getCurrentWeather() {
 
-        return response.json();
+    const position = await getPosition();
+    const {latitude, longitude} = position.coords;
+    const data = await FetchWeatherByCoords(latitude, longitude);
+    renderCurrentWeather(data);
+}
+
+async function FetchWeatherByCoords(lat, lon, lang) {
+    const url = `${baseURL}?lat=${lat}&lon=${lon}&lang=${lang}&units=metric&appid=${apiKey}`;
+    const response = await fetch(url);
+    
+    if(!response.ok) {
+        throw new Error(`Weather API is broken. : ${response.status}`);
     }
-    catch(error) {
-        console.log("An error occured", error);
-    }
+
+    return response.json();
 }
 
 async function FetchWeatherByCity(city) {
-    try {
-        const city_url = `${baseURL}?city=${city}`;
-        const response = await fetch(city_url);
 
-        if(!response.ok) {
-            throw new Exception(`CITY NOT FOUND - API is broken : ${response.status}`);
-        }
+    const city_url = `${baseURL}?q=${encodeURIComponent(city)}&units=metric&appid=${apiKey}`;
+    const response = await fetch(city_url);
 
-        return response.json();
+    if(!response.ok) {
+        throw new Error(`CITY NOT FOUND - API is broken : ${response.status}`);
     }
-    catch(error) {
-        console.log("An error occurs", error);
-    }
+
+    return response.json();
 }
 
 async function renderCurrentWeather(data) {
@@ -58,29 +54,30 @@ async function renderCurrentWeather(data) {
     `${data.name}, ${data.sys.country}`;
 
     document.getElementById("temperature").textContent = 
-    `TEMPERATURE: ${Math.round(data.main.temp)} * C`;
+    `${Math.round(data.main.temp)} * C`;
 
     document.getElementById("humidity").textContent =
-    `HUMIDITY: ${data.main.humidity}`;
+    `${data.main.humidity}`;
 
     document.getElementById("wind-speed").textContent =
-    `SPEED: ${data.wind.speed} m/s | DEG: ${data.wind.deg}`;
+    `${data.wind.speed} m/s \n DEG: ${data.wind.deg}`;
 
     document.getElementById("weather-description").textContent = 
-    `DESCRIPTION: ${data.weather[0].description}`;
+    `${data.weather[0].description}`;
 
     const iconCode = data.weather[0].icon;
     document.getElementById("weather-display").innerHTML =
     `<img
     src="https://openweathermap.org/img/wn/${iconCode}@2x.png"
-    alt="${data.weather[0].description}";
+    alt="${data.weather[0].description}" 
+    style='width: 200px';
     > `;
 
 }
 
 async function renderSearchWeather(search) {
     document.getElementById("search-header-location").textContent =
-    `${search.name}`;
+    `${search.name} , ${search.sys.country}`;
 
     document.getElementById("search-temperature").textContent =
     `TEMPERATURE:  ${search.main.temp}`;
@@ -88,12 +85,43 @@ async function renderSearchWeather(search) {
     document.getElementById("search-humidity").textContent = 
     `HUMIDITY: ${search.main.humidity}`;
 
-    document.getElementById("")
+    document.getElementById("search-wind-speed").textContent =
+    `WIND SPEED: ${search.wind.speed}`;
 
-    const iconCode = data.weather[0].icon;
+    document.getElementById("search-weather-description").textContent =
+    `${search.weather[0].description}`;
+
+    const searchIcon = data.weather[0].icon;
     document.getElementById("search-weather-display").innerHTML =
     `<img
-    src="https://openweathermap.org/img/wn/${iconCode}@2x.png"
-    alt="${data.weather[0].description}";
+    src="https://openweathermap.org/img/wn/${searchIcon}@2x.png"
+    alt="${search.weather[0].description}";
     > `;
 }
+
+async function getWeather() {
+    const citySearch = document.getElementById("search-location").value.trim();
+
+    if(!citySearch) return;
+
+    try {
+        const data = await FetchWeatherByCity(citySearch);
+        renderSearchWeather(data);
+
+        visits++;
+        localStorage.setItem("searchVisits", visits);
+        updateSearchCounts();
+    }
+    catch(err) {
+        console.error("An error has occured." , err);
+        document.getElementById("search-header-location").textContent = 
+        "Location not found";
+    }
+
+}
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    getCurrentWeather();
+    updateSearchCounts();
+});
