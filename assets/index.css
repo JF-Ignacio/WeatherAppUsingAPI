@@ -19,69 +19,220 @@
 
 body {
     background: var(--base-color);
+    font-family: "Open Sans", Arial, sans-serif;
 }
 
 header {
     display: flex;
     align-items: center;
     border-bottom: 1px solid black;
-    height: 110px;
+    min-height: 96px;
+    height: 100px;
 }
 
 nav a span {
     font-family: var(--header-font);
     font-size: 2.6rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.navbar-brand {
+    max-width: 100%;
+}
+
+.navbar-brand img {
+    width: 140px;
+    height: auto;
 }
 
 #hero-landing {
     background-color: rgb(231, 231, 221);
+    min-height: calc(100vh - 96px);
+    padding: 4rem 1.25rem;
+    overflow: hidden;
+}
+
+.hero-content {
+    width: min(100%, 920px);
 }
 
 #hero-landing h1 {
     font-family: var(--landing-font);
     font-weight: 300;
     font-style: normal;
+    font-size: clamp(1.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 0 !important;
+    white-space: nowrap;
 }
-#hero-landing img {
-    width: 150px;
+
+.hero-title-group {
+    gap: clamp(1.5rem, 6vw, 1rem);
+    width: 100%;
+}
+
+#hero-landing .hero-icon {
+    width: clamp(55px, 15vw, 160px);
+    flex: 0 0 auto;
     animation: bounce 4s ease-in infinite;
 }
 
 .lead {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .small {
     font-style: italic;
 }
+
+.visitor-card {
+    width: min(100%, 280px);
+    border: 0;
+    border-radius: 8px;
+}
+
 @keyframes bounce {
     0% {
         transform: translateY(0);
     }
     25% {
-        transform: translateY(50px);
+        transform: translateY(16px);
     }
     50% {
-        transform: translateY(-50px);
+        transform: translateY(-16px);
     }
     75% {
-        transform: translateY(50px);
+        transform: translateY(16px);
     }
     100% {
-        transform: translateY(-50px);
+        transform: translateY(0);
     }
 }
 
-#location-hero {
+.location-hero {
     border-left: 4px solid black;
     padding: 20px;
     border-radius: 12px;
 }
 
+.weather-api-icon {
+    width: 200px;
+    max-width: 100%;
+}
+
+#search-controls {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #humidity-display,
 #temperature-display,
 #wind-display,
-#weather-description-display {
+#weather-description-display,
+#search-humidity-display,
+#search-temperature-display,
+#search-wind-display,
+#search-weather-description-display {
     border-left: 5px solid violet;
     border-radius: 10px;
+}
+
+@media (max-width: 575.98px) {
+    header {
+        min-height: 78px;
+                justify-content: center;
+        display: flex;
+        text-align: center;
+        align-items: center;
+    }
+
+    .navbar {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+                justify-content: center;
+        display: flex;
+        text-align: center;
+    }
+
+    .navbar-brand {
+        padding: 1rem 0 !important;
+        margin-right: 0;
+        justify-content: center;
+        display: flex;
+        text-align: center;
+    }
+
+    nav a span {
+        font-size: 2rem;
+                justify-content: center;
+        display: flex;
+        text-align: center;
+    }
+
+    .navbar-brand img {
+        width: 96px;
+                justify-content: center;
+        display: flex;
+        text-align: center;
+    }
+
+    #hero-landing {
+        min-height: calc(100vh - 78px);
+        padding: 3rem 1rem;
+    }
+
+    #hero-landing .btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.9rem 1.5rem !important;
+        font-size: 1rem;
+    }
+
+    .visitor-card {
+        margin-top: 2rem !important;
+    }
+}
+
+.full-weather-display .symbol {
+    display: block;
+    margin-top: 0.75rem;
+}
+
+.full-weather-display .metric-img {
+    width: 50px;
+    max-width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.full-weather-display .metric-img[src=""] {
+    display: none;
+}
+
+/*MEDIA VIEW --- ABSOLUTE MEDIA SIZE*/
+@media (max-width: 767.98px) {
+    .location-hero {
+        border-top: 5px solid black;
+        border-left: 0px;
+        padding: 12px;
+    }
+
+    #humidity-display,
+    #temperature-display,
+    #wind-display,
+    #weather-description-display,
+    #search-humidity-display,
+    #search-temperature-display,
+    #search-wind-display,
+    #search-weather-description-display {
+        border-left: 0px;
+        border-top: 5px solid blueviolet;
+        border-radius: 12px;
+    }
 }
