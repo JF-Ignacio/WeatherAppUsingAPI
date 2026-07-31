@@ -2,6 +2,8 @@
 
 Franz Weather is a simple weather app built while practicing web development. It uses the OpenWeather API to show current weather information and lets visitors search for weather by city.
 
+https://jf-ignacio.github.io/WeatherAppUsingAPI/ 
+
 ## Features
 
 - Shows weather for the visitor's current location using browser geolocation.
