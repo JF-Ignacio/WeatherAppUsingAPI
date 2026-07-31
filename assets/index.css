@@ -394,7 +394,7 @@ nav a span {
     height: 100vh;
     z-index: 1000;
     background-color: rgba(0,0,0,0.6);
-    filter: blur(80px);
+    filter: blur(5px);
 
     opacity: 0;
     transition: opacity 0.3s ease;
