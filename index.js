@@ -89,7 +89,7 @@ async function renderCurrentWeather(data) {
 
     const tempImg = document.getElementById("temp-img");
     const currentTemp = Math.round(data.main.temp);
-    tempImg.src = currentTemp >= 30 ? 'assets/images/hot_temp.jpg' : '/WeatherApp/assets/images/cold_temp.jpg';
+    tempImg.src = currentTemp >= 30 ? 'assets/images/hot_temp.jpg' : 'assets/images/cold_temp.jpg';
 
     document.getElementById("currentLocation").textContent = 
     `${data.name}, ${data.sys.country}`;
