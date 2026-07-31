@@ -394,7 +394,7 @@ nav a span {
     height: 100vh;
     z-index: 1000;
     background-color: rgba(0,0,0,0.6);
-    --webkit-filter: blur(80px);
+    filter: blur(80px);
 
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -406,7 +406,7 @@ nav a span {
 }
 
 .payment.is-visible .card {
-    transform: scale(0.8) rotate(-360deg);
+    transform: scale(0.8) rotate(-15deg);
     opacity: 1;
 }
 
@@ -417,11 +417,11 @@ nav a span {
     border-radius: 20px;
     color: whitesmoke;
     max-width: 500px;
+    max-height: 85vh;
     border-left: 15px solid #d8b519;
  
     transition: 
     opacity 0.5s ease,
-    max-height 0.3s ease,
     transform cubic-bezier(0.34, 1.56, 0.64, 1);
 
 }
