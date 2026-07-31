@@ -1,6 +1,6 @@
 const apiKey = "b704f8087d6fbf2bc884c538e16ddf6e"; // FROM OPENWEATHER API
 const baseURL = "https://api.openweathermap.org/data/2.5/weather";
-
+const searches = 1;
 let visits = parseInt(localStorage.getItem("searchVisits")) || 0;
 
 function getPosition() {
@@ -196,28 +196,35 @@ async function renderSearchWeather(search) {
   
 }
 
+function showPaymentPopUp() {
+    document.querySelector(".payment").classList.add("is-visible");
+}
+
+function closePayment() {
+    document.querySelector(".payment").classList.remove("is-visible");
+}
+
 async function getWeather() {
     const citySearch = document.getElementById("search-location").value.trim();
-    const searchBtn = document.getElementById("search-btn");
     const notice = document.getElementById("notice");
 
-    searchBtn.addEventListener("click", async () => {
-        if(citySearch === "") {
-            notice.textContent = "Empty Fields. Search first!";
-            return;
-        } 
+    if(citySearch === '') {
+        notice.textContent = "Empty Fields";
+        return;
+    }
 
-        notice.textContent = "";
-    })
+    notice.textContent = "";
+    showPaymentPopUp();
+    return;
 
-    if(!citySearch) return;
-
+    notice.textContent = "";
 
     try {
         const data = await FetchWeatherByCity(citySearch);
         renderSearchWeather(data);
 
         visits++;
+        searches++;
         localStorage.setItem("searchVisits", visits);
         updateSearchCounts();
     }
