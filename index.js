@@ -175,7 +175,7 @@ function getSearchWeatherIcon(data) {
 async function renderSearchWeather(search) {
     const searchTemp = Math.round(search.main.temp);
     const searchTempImg = document.getElementById("search-temp-img");
-    searchTempImg.src = searchTemp >= 30 ? '/WeatherApp/assets/images/hot_temp.jpg' : '/WeatherApp/assets/images/cold_temp.jpg';
+    searchTempImg.src = searchTemp >= 30 ? 'assets/images/hot_temp.jpg' : '/WeatherApp/assets/images/cold_temp.jpg';
 
     document.getElementById("search-header-location").textContent =
     `${search.name} , ${search.sys.country}`;
