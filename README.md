@@ -4,6 +4,8 @@ Franz Weather is a simple weather app built while practicing web development. It
 
 https://jf-ignacio.github.io/WeatherAppUsingAPI/ 
 
+![WEATHER APP PREVIEW](assets/images/whole.png)
+
 ## Features
 
 - Shows weather for the visitor's current location using browser geolocation.
