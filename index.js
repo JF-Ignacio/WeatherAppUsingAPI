@@ -91,7 +91,6 @@ async function renderCurrentWeather(data) {
     const currentTemp = Math.round(data.main.temp);
     tempImg.src = currentTemp >= 30 ? '/WeatherApp/assets/images/hot_temp.jpg' : '/WeatherApp/assets/images/cold_temp.jpg';
 
-
     document.getElementById("currentLocation").textContent = 
     `${data.name}, ${data.sys.country}`;
 
@@ -107,12 +106,71 @@ async function renderCurrentWeather(data) {
     document.getElementById("weather-description").textContent = 
     `${data.weather[0].description}`;
 
+    getCurrentWeatherIcon(data);
+}
+
+function getCurrentWeatherIcon(data) {
+    const description = data.weather[0].description.toLowerCase();
+    const renderImg = document.getElementById("current-weather-icon");
     const iconCode = data.weather[0].icon;
-    const currentWeatherIcon = document.getElementById("current-weather-icon");
-    currentWeatherIcon.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    currentWeatherIcon.alt = data.weather[0].description;
+
+    const conditions = [
+        "rain",
+        "drizzle",
+        "thunderstorm",
+        "clouds",
+        "clear",
+        "snow"
+    ];
+
+    const images = {
+        rain: "assets/images/rain_main.jpg",
+        drizzle: "assets/images/drizzle_main.png",
+        thunderstorm: "assets/images/thunderstorm.jpg",
+        clouds: "assets/images/clouds.jpg",
+        clear: "assets/images/clear.jpg",
+        snow: "assets/images/snow.jpg"
+    };
+
+    const match = conditions.find(condition => description.includes(condition));
+    const src = match ? images[match] : `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+     renderImg.src = src;
+     renderImg.alt = description;
 
 }
+
+function getSearchWeatherIcon(data) {
+
+    const description = data.weather[0].description.toLowerCase();
+    const icon = data.weather[0].icon;
+    const display = document.getElementById("search-weather-display");
+
+    const conditions = [
+        "rain",
+        "drizzle",
+        "thunderstorm",
+        "clouds",
+        "clear",
+        "snow"
+    ];
+
+    const images = {
+        rain: "assets/images/rain_main.jpg",
+        drizzle: "assets/images/drizzle_main.png",
+        thunderstorm: "assets/images/thunderstorm.jpg",
+        clouds: "assets/images/clouds.jpg",
+        clear: "assets/images/clear.jpg",
+        snow: "assets/images/snow.jpg"
+    };
+
+    const match = conditions.find(condition => description.includes(condition));
+    const src = match ? images[match] : `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+    display.src = src;
+    display.alt = description;
+}
+
 
 async function renderSearchWeather(search) {
     const searchTemp = Math.round(search.main.temp);
@@ -134,10 +192,7 @@ async function renderSearchWeather(search) {
     document.getElementById("search-weather-description").textContent =
     `${search.weather[0].description}`;
 
-    const searchIcon = search.weather[0].icon;
-    const searchWeatherIcon = document.getElementById("search-weather-display");
-    searchWeatherIcon.src = `https://openweathermap.org/img/wn/${searchIcon}@2x.png`;
-    searchWeatherIcon.alt = search.weather[0].description;
+    getSearchWeatherIcon(search);
   
 }
 
@@ -175,8 +230,75 @@ async function getWeather() {
 }
 
 
+function LandingPageAnimation() {
+    
+    const observerOpt = {
+        root: null,
+        threshold: 0.30
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add("appear-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOpt);
+
+    const animationTarget = document.querySelectorAll(".info");
+    animationTarget.forEach(card => scrollObserver.observe(card));
+}
+
+function LocationHeroAnimate() {
+    
+    const observerOpt = {
+        root: null,
+        threshold: 0.30
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add("appear-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOpt);
+
+    const animationTarget = document.querySelectorAll(".location-hero");
+    animationTarget.forEach(card => scrollObserver.observe(card));
+}
+
+function OpeningAnimation() {
+    
+    const observerOpt = {
+        root: null,
+        threshold: 0.60
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add("appear-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOpt);
+
+    const animationTarget = document.querySelectorAll(".hero-content");
+    const card_target = document.querySelectorAll(".visitor-card");
+    const search_cards = document.querySelectorAll(".full-weather-display");
+    animationTarget.forEach(card => scrollObserver.observe(card));
+    card_target.forEach(visitor => scrollObserver.observe(visitor));
+    search_cards.forEach(search => scrollObserver.observe(search));
+}
+
 window.addEventListener("DOMContentLoaded", () => {
     getCurrentWeather();
     updateSearchCounts();
     renderQuote("happiness");
+    LandingPageAnimation();
+    LocationHeroAnimate();
+    OpeningAnimation();
 });
