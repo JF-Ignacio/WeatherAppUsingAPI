@@ -406,7 +406,7 @@ nav a span {
 }
 
 .payment.is-visible .card {
-    transform: scale(0.8) rotate(-15deg);
+    transform: scale(0.2) rotate(0);
     opacity: 1;
 }
 
